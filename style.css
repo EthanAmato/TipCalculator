@@ -101,8 +101,9 @@ padding-bottom: 20px;
 
 /* Tip Area */
 .tip-area{
-    display: flex;
-    justify-content: center;
+    display: flexbox;
+    align-content: space-between;
+    text-align: center;
     background-color: #DEE2E6;
     padding: 2rem;
     border-top: #31A096 solid .5rem;
