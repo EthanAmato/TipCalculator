@@ -1,0 +1,8 @@
+div.slider1,div.slider2,div.slider3,div.slider4,div.slider5 {
+    width: 50%;
+    margin: auto;
+}
+
+.class-label{
+    font-size: 100px;
+}
