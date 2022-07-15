@@ -1,7 +1,8 @@
 //Constants
 
-const defaultTip = 15;
-const largeParty = 20;
+const defaultTip = 15; //Good practice to tip at least 15%
+const largeParty = 20; //Frequently required to charge at least 20% for parties of 6 or more
+
 //Initialize Element-bound Variables
 
 function getValue(object){
@@ -10,9 +11,9 @@ function getValue(object){
 //Initialize Price Catcher
 let price = document.querySelector('#price');
 let priceValue =price.value;
+
 function priceUpdater(events){
-    priceValue =  parseInt(price.value); 
-    console.log(priceValue);
+    priceValue =  parseInt(this.value); 
 }
 
 price.addEventListener('change', priceUpdater);
@@ -24,17 +25,16 @@ price.addEventListener('change', priceUpdater);
 
 
 //Initialize NumPeople Catcher
-function numPeopleUpdater(events){
-    priceValue = parseInt(price.value); 
-    console.log(numPeopleValue);
-}
+
 
 let numPeople = document.querySelector('#numPeople');
 let numPeopleValue = numPeople.value
+
 function numPeopleUpdater(events){
-    numPeopleValue = parseInt(numPeople.value); 
-    console.log(numPeopleValue);
+    numPeopleValue = parseInt(this.value);
 }
+
+
 numPeople.addEventListener('change', numPeopleUpdater);
 //Value of numPeople now logged in numPeopleValue
 
@@ -55,71 +55,80 @@ let food = slider1.value;
 let ambience = slider5.value;
 let averagePoints;
 let tip;
+let checkboxChecked;
+
+//########################################################
+
+//Initialize event listeners for all sliders
+
+
+let updateSliders = function(e,rateNumber){
+    let h1Label = ".slider"+rateNumber+" h1" //Create a string corresponding to the slider with associated h1
+    let rating = document.querySelector(h1Label); //initialize rating variable based on h1Label
+    rating.innerHTML = e; //set innerhtml of custom slider to the new event value
+}
+
+slider1.addEventListener('change', () => {updateSliders(slider1.value,1)},false); 
+slider2.addEventListener('change', () => {updateSliders(slider2.value,2)},false); 
+slider3.addEventListener('change', () => {updateSliders(slider3.value,3)},false); 
+slider4.addEventListener('change', () => {updateSliders(slider4.value,4)},false); 
+slider5.addEventListener('change', () => {updateSliders(slider5.value,5)},false); 
+checkbox.addEventListener('click', function(events){
+    checkboxChecked = checkbox.checked;
+},false); //checking if checkbox is checked in form of boolean
+
+//########################################################
+
+//Initialize Button for Calculations
+
+let button = document.querySelector('.button-submit button').addEventListener('click',buttonCalculate);
 
 //########################################################
 
 //Initialize Functions
 
-function qualityPoints(arr){
+function average(arr){
     return arr.reduce((a, b) => a + b, 0) / arr.length;
-} //avgs array
+} //avgs an array of size n
 
-function calculateTip(priceValue, numPeopleValue, averagePoints) {
+function calculateTip(priceValue, numPeopleValue, averagePoints, recommend) {
     //avg points is from 0-10 - we need to make it from -5 to 5
     convertedAvg = averagePoints - 5;
+    if (recommend === true) {convertedAvg+=2.5}; //add extra 2.5% if you would recommend to friends
     if (numPeopleValue>= 6) {
         tip = largeParty+convertedAvg;
-        console.log(tip)
-        return [tip, priceValue];
+        return tip;
     }
     else{
         tip = defaultTip+convertedAvg;
-        console.log(tip)
-        return [tip, priceValue];
+        return tip;
     }
 
 }
 
-
-let update = function(e,rateNumber){
-    console.log(priceValue)
-    let h1Label = ".slider"+rateNumber+" h1" //Create a string corresponding to the slider with associated h1
-    let rating = document.querySelector(h1Label); //initialize rating variable based on h1Label
-    rating.innerHTML = e; //set innerhtml of custom slider to the new event value
-    
-
+function buttonCalculate() {
+    //Store Args into variables
     waitTime = parseInt(slider2.value);
     serviceQual =  parseInt(slider3.value);
     clean =  parseInt(slider4.value);
     food =  parseInt(slider1.value);
     ambience =  parseInt(slider5.value);
-    let arr = [waitTime,serviceQual,clean,food,ambience]
+    checkboxChecked = checkbox.checked;
 
-    averagePoints = qualityPoints(arr);
+    //Store scores into array
+    arr = [waitTime,serviceQual,clean,food,ambience];
 
-    tipArray = calculateTip(priceValue,numPeopleValue,averagePoints);
-    console.log(tipArray[0],tipArray[1]);
-    tipPercent = tipArray[0]/100
-    tippedTotal = tipArray[1]*(tipPercent+1)
+    //Calculate Average # of Points From Sliders
+    averagePoints = average(arr);
 
-    
-    console.log(tipPercent,tippedTotal);
+    //Calculate Tip from Average Point, Number of People, and Total Price
+    tip = calculateTip(priceValue,numPeopleValue,averagePoints,checkboxChecked);    //Stores tip as an integer
+    tippedTotal = priceValue*((tip/100)+1); //Stores total with tip included
+
+    document.querySelector('#tip').innerHTML="Your tip is: "+tip+"%";
+    document.querySelector('#total').innerHTML="Your total is: $"+parseFloat(tippedTotal).toFixed(2);
 }
 
-let checkboxChecked;
-
-//Initialize event listeners for all sliders
-
-
-
-slider1.addEventListener('change', () => {update(slider1.value,1)},false); 
-slider2.addEventListener('change', () => {update(slider2.value,2)},false); 
-slider3.addEventListener('change', () => {update(slider3.value,3)},false); 
-slider4.addEventListener('change', () => {update(slider4.value,4)},false); 
-slider5.addEventListener('change', () => {update(slider5.value,5)},false); 
-checkbox.addEventListener('click', function(events){
-    checkboxChecked = checkbox.checked;
-},false); 
 
 
  
