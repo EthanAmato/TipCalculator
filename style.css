@@ -1,8 +1,112 @@
-div.slider1,div.slider2,div.slider3,div.slider4,div.slider5 {
-    width: 50%;
-    margin: auto;
+/* Full body styling start */
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'Oswald', sans-serif;
 }
 
-.class-label{
-    font-size: 100px;
+body{
+    display: flexbox;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(90deg, #febb2b 1%, #26bdbf 100%);
 }
+/* full body styling end */
+/* header text */
+.TipHeader{
+    display: flex;
+    justify-content: center;
+    margin: 1rem;
+    padding: 1rem;
+    border-radius: 1rem;
+    font-size: 50px;
+    color: #2c2c2c;
+    font-weight: 600;
+}
+
+/* Header text end */
+/* Plus Icon start */
+
+.plusicon{
+    display: flex;
+    margin: 1rem;
+    opacity: .8;
+}
+
+/* plus icon end */
+/* Price & numPeople */
+.formcontain{
+    display: flex;
+    width: 100vw;
+    height: 6rem;
+   
+}
+
+.formcontain input{
+    font-size: 1.5rem;
+    text-align: center;
+    background-color:#F7FEFF;
+    border: solid #FDA770;
+    display: flex;
+    align-content: space-between;
+}
+
+/* End of price & numPeople */
+/* start slider contain */
+
+.slidercontain{
+    display: flexbox;
+    margin: 1rem 4rem;
+    padding: 1rem 3rem;
+}
+
+.slidercontain label{
+    display: flex;
+background-color: #40BCB6;
+font-size: 2rem;
+color: #2c2c2c;
+border-radius: .5rem;
+border: double white;
+padding: .2rem;
+
+}
+
+/* end slider section */
+/* start checkbox section */
+
+.checkmark{
+    display: flex;
+    justify-content: center;
+    
+}
+
+.checkmark label{
+
+font-size: 1.8rem;
+padding-top: -10px;
+margin-top: -10px;
+padding-bottom: 20px;
+}
+
+.checkmark input{
+    background-color: crimson;
+    transition: ease 0.4s;
+}
+
+.checkmark input:hover{
+    cursor: pointer;
+}
+
+/* end checkbox section */
+
+/* Tip Area */
+.tip-area{
+    display: flex;
+    justify-content: center;
+    background-color: #DEE2E6;
+    padding: 2rem;
+    border-top: #31A096 solid .5rem;
+    border-radius:.7rem;
+    
+}
+/* Tip Area */
