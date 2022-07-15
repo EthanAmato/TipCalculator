@@ -1,18 +1,46 @@
+//Constants
+
+const defaultTip = 15;
+const largeParty = 20;
 //Initialize Element-bound Variables
 
 function getValue(object){
-    return object.value
+    return object.value;
+}
+//Initialize Price Catcher
+let price = document.querySelector('#price');
+let priceValue =price.value;
+function priceUpdater(events){
+    priceValue =  parseInt(price.value); 
+    console.log(priceValue);
 }
 
-let price = document.querySelector('#price').value
+price.addEventListener('change', priceUpdater);
 
-price.addEventListener('change', function(events){price.value = price.value;});
-
-let numPeople = document.querySelector('#numPeople').addEventListener('change', function(events){
-    let self = this;
-    return self.value});
+//Value of Price now logged in priceValue
 
 
+//########################################################
+
+
+//Initialize NumPeople Catcher
+function numPeopleUpdater(events){
+    priceValue = parseInt(price.value); 
+    console.log(numPeopleValue);
+}
+
+let numPeople = document.querySelector('#numPeople');
+let numPeopleValue = numPeople.value
+function numPeopleUpdater(events){
+    numPeopleValue = parseInt(numPeople.value); 
+    console.log(numPeopleValue);
+}
+numPeople.addEventListener('change', numPeopleUpdater);
+//Value of numPeople now logged in numPeopleValue
+
+//########################################################
+
+//Initialize Sliders + Variables for Input Functions
 let slider1 = document.querySelector('#customRange1');
 let slider2 = document.querySelector('#customRange2');
 let slider3 = document.querySelector('#customRange3');
@@ -26,25 +54,39 @@ let clean = slider4.value;
 let food = slider1.value;
 let ambience = slider5.value;
 let averagePoints;
+let tip;
+
+//########################################################
+
+//Initialize Functions
 
 function qualityPoints(arr){
     return arr.reduce((a, b) => a + b, 0) / arr.length;
-}
+} //avgs array
 
-function calculateTip(price, numPeople, averagePoints) {
+function calculateTip(priceValue, numPeopleValue, averagePoints) {
     //avg points is from 0-10 - we need to make it from -5 to 5
     convertedAvg = averagePoints - 5;
-    console.log(convertedAvg);
+    if (numPeopleValue>= 6) {
+        tip = largeParty+convertedAvg;
+        console.log(tip)
+        return [tip, priceValue];
+    }
+    else{
+        tip = defaultTip+convertedAvg;
+        console.log(tip)
+        return [tip, priceValue];
+    }
+
 }
 
 
 let update = function(e,rateNumber){
+    console.log(priceValue)
     let h1Label = ".slider"+rateNumber+" h1" //Create a string corresponding to the slider with associated h1
     let rating = document.querySelector(h1Label); //initialize rating variable based on h1Label
-    console.log(e);
     rating.innerHTML = e; //set innerhtml of custom slider to the new event value
     
-    console.log(price,numPeople);
 
     waitTime = parseInt(slider2.value);
     serviceQual =  parseInt(slider3.value);
@@ -53,12 +95,15 @@ let update = function(e,rateNumber){
     ambience =  parseInt(slider5.value);
     let arr = [waitTime,serviceQual,clean,food,ambience]
 
-    console.log(price,numPeople);
     averagePoints = qualityPoints(arr);
 
-    calculateTip(price,numPeople,averagePoints);
+    tipArray = calculateTip(priceValue,numPeopleValue,averagePoints);
+    console.log(tipArray[0],tipArray[1]);
+    tipPercent = tipArray[0]/100
+    tippedTotal = tipArray[1]*(tipPercent+1)
 
-    console.log(averagePoints);
+    
+    console.log(tipPercent,tippedTotal);
 }
 
 let checkboxChecked;
