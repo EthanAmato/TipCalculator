@@ -111,3 +111,20 @@ padding-bottom: 20px;
     
 }
 /* Tip Area */
+
+/* Submit Button */
+.button-submit{
+   display: flex;
+   justify-content: center;
+   padding: 1rem;
+}
+
+button{
+    width: 12rem;
+}
+
+#submitbtn {
+    font-size: 25px;
+}
+
+/* End Submit Button */
